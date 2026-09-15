@@ -1,0 +1,52 @@
+# Requires an ALREADY installed compatible operator and CRD.
+# This manifest does not install or upgrade either cluster-wide component.
+apiVersion: milvus.io/v1beta1
+kind: Milvus
+metadata:
+  name: doctor-test-operator
+  namespace: doctor-test-operator
+  labels:
+    io.milvus.doctor.lab: 'true'
+spec:
+  mode: standalone
+  components:
+    image: milvusdb/milvus:v2.6.15
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests: {cpu: 100m, memory: 256Mi}
+      limits: {cpu: '2', memory: 2Gi}
+    standalone:
+      replicas: 1
+      serviceType: ClusterIP
+  config:
+    log:
+      level: warn
+  dependencies:
+    msgStreamType: woodpecker
+    etcd:
+      inCluster:
+        deletionPolicy: Delete
+        pvcDeletion: true
+        values:
+          replicaCount: 1
+          image:
+            repository: milvusdb/etcd
+            tag: 3.5.23-r2
+          persistence:
+            enabled: false
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {cpu: '1', memory: 512Mi}
+    storage:
+      inCluster:
+        deletionPolicy: Delete
+        pvcDeletion: true
+        values:
+          mode: standalone
+          image:
+            tag: RELEASE.2024-12-18T13-15-44Z
+          persistence:
+            enabled: false
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {cpu: '1', memory: 512Mi}

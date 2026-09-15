@@ -1,0 +1,5 @@
+# Isolated test instance only; no production tuning is implied.
+log:
+  level: warn
+common:
+  defaultPartitionName: _default

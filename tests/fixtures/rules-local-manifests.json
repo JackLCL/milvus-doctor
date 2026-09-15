@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "deployment": {"mode": "unknown", "method": "snapshot"},
+  "sources": [{"name": "manifests", "status": "ok"}],
+  "manifests": [
+    {"services": {"milvus": {"image": "milvusdb/milvus:v2.6.0", "depends_on": ["etcd"], "deploy": {"resources": {"reservations": {"memory": "8g"}, "limits": {"memory": "4g"}}}}}},
+    {"cluster": {"enabled": "false"}},
+    {"apiVersion": "milvus.io/v1beta1", "kind": "Milvus", "metadata": {"name": "example"}, "spec": {"mode": "distributed"}},
+    {"kind": "Deployment", "metadata": {"name": "milvus"}, "spec": {"template": {"spec": {"containers": [{"name": "milvus", "resources": {"requests": {"cpu": "2"}, "limits": {"cpu": "500m"}}}]}}}}
+  ],
+  "config": {"proxy": {"port": 70000}}
+}

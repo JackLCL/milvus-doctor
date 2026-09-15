@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "deployment": {"mode": "cluster", "method": "operator"},
+  "sources": [{"name": "kubernetes", "status": "ok"}],
+  "kubernetes": {
+    "pods": [
+      {"metadata": {"name": "querynode", "namespace": "test", "labels": {"app": "milvus", "component": "querynode"}}, "spec": {"containers": [{"name": "querynode", "resources": {"requests": {"memory": "8Gi"}, "limits": {"memory": "4Gi"}}}]}, "status": {"phase": "Pending", "conditions": [{"type": "PodScheduled", "status": "False", "reason": "Unschedulable"}], "containerStatuses": [{"name": "querynode", "state": {"waiting": {"reason": "ImagePullBackOff"}}}]}},
+      {"metadata": {"name": "proxy", "namespace": "test", "labels": {"app": "milvus", "component": "proxy"}}, "status": {"phase": "Running", "conditions": [{"type": "Ready", "status": "False"}], "containerStatuses": [{"name": "proxy", "restartCount": 5, "state": {"waiting": {"reason": "CrashLoopBackOff"}}, "lastState": {"terminated": {"reason": "OOMKilled"}}}]}}
+    ],
+    "deployments": [{"metadata": {"name": "querynode", "namespace": "test"}, "spec": {"replicas": 2}, "status": {"readyReplicas": 0}}],
+    "pvcs": [{"metadata": {"name": "etcd-data", "namespace": "test"}, "status": {"phase": "Pending"}}],
+    "services": [{"metadata": {"name": "milvus", "namespace": "test"}, "spec": {"selector": {"app": "milvus", "component": "wrong-proxy"}}}],
+    "events": [{"reason": "Unhealthy", "message": "Readiness probe failed", "count": 2, "involvedObject": {"name": "proxy"}}],
+    "helm_releases": [{"name": "milvus-operator", "status": "failed"}],
+    "milvuses": [{"metadata": {"name": "milvus", "namespace": "test", "generation": 3}, "spec": {"mode": "cluster"}, "status": {"status": "Unhealthy", "observedGeneration": 2, "conditions": [{"type": "EtcdReady", "status": "False", "reason": "EtcdNotReady"}]}}]
+  }
+}

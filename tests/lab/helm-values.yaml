@@ -1,0 +1,59 @@
+# Small disposable cluster. Never use as production values.
+cluster:
+  enabled: true
+image:
+  all:
+    repository: milvusdb/milvus
+    tag: v2.6.15
+    pullPolicy: IfNotPresent
+labels:
+  io.milvus.doctor.lab: 'true'
+service:
+  type: ClusterIP
+streaming:
+  enabled: true
+  woodpecker:
+    embedded: true
+    storage:
+      type: minio
+pulsar:
+  enabled: false
+pulsarv3:
+  enabled: false
+kafka:
+  enabled: false
+etcd:
+  replicaCount: 1
+  image:
+    repository: milvusdb/etcd
+    tag: 3.5.23-r2
+  persistence:
+    enabled: false
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+    limits: {cpu: '1', memory: 512Mi}
+minio:
+  mode: standalone
+  image:
+    tag: RELEASE.2024-12-18T13-15-44Z
+  persistence:
+    enabled: false
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+    limits: {cpu: '1', memory: 512Mi}
+proxy:
+  resources: &component_resources
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {cpu: '2', memory: 2Gi}
+queryNode:
+  resources: *component_resources
+dataNode:
+  resources: *component_resources
+mixCoordinator:
+  resources: *component_resources
+streamingNode:
+  resources: *component_resources
+log:
+  level: warn
+  persistence:
+    enabled: false

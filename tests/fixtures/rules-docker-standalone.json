@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "deployment": {"mode": "standalone", "method": "compose"},
+  "sources": [{"name": "docker", "status": "ok"}, {"name": "milvus", "status": "ok"}],
+  "docker": {"containers": [
+    {"name": "standalone", "role": "milvus", "state": "running", "health": "unhealthy", "restart_count": 3, "oom_killed": true, "memory_limit_bytes": 1073741824, "memory_usage_bytes": 1020054733},
+    {"name": "etcd", "role": "etcd", "state": "exited", "exit_code": 1}
+  ]},
+  "milvus": {"version": "2.6.0", "collections": [{"name": "search", "loaded": false, "schema": {"fields": [{"name": "embedding", "type": "FLOAT_VECTOR", "params": {"dim": 128}}]}, "indexes": []}]}
+}

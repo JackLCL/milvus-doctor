@@ -1,0 +1,6 @@
+# Test-only auth-enabled standalone. Doctor never changes this configuration.
+log:
+  level: warn
+common:
+  security:
+    authorizationEnabled: true

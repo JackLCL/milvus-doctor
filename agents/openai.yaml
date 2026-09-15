@@ -1,0 +1,4 @@
+interface:
+  display_name: "Milvus Doctor"
+  short_description: "Read-only Milvus diagnostics with evidence and guided rechecks"
+  default_prompt: "Use $milvus-doctor to diagnose my selected Milvus deployment with minimal read-only access and explain the evidence and suggested next steps."

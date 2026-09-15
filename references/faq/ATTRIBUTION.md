@@ -1,0 +1,9 @@
+# Third-party Milvus FAQ material
+
+The files under sources/ are unmodified Markdown from https://github.com/milvus-io/milvus-docs, copyright their original authors/contributors, licensed under Apache License 2.0.
+
+The exact versions, commits and hashes are recorded in catalog.json/provenance.json. Original license text and any upstream NOTICE files are included under licenses/. Remote images/linked manuals are not copied.
+
+catalog.json is a derived section index with Milvus Doctor keywords, risk annotations and read-only guidance. These annotations are not upstream text, do not certify FAQ accuracy and do not authorize execution of examples. Original text is retained for review; known conflicting/destructive text is not the default answer.
+
+This third-party notice applies to the documentation material only; it does not choose a license for Milvus Doctor's own code.

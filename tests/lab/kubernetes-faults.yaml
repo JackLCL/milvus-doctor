@@ -1,0 +1,71 @@
+# Test-only intentional faults. Never apply to an existing application namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: doctor-test-faults
+  labels: {io.milvus.doctor.lab: 'true'}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: doctor-test-pending
+  namespace: doctor-test-faults
+  labels: {app: milvus, io.milvus.doctor.lab: 'true'}
+spec:
+  automountServiceAccountToken: false
+  nodeSelector:
+    doctor-test-no-such-node: 'true'
+  containers:
+    - name: milvus
+      image: milvusdb/milvus:v2.6.15
+      imagePullPolicy: Never
+      command: [/bin/sh, -c, 'sleep 3600']
+      resources:
+        requests: {cpu: 10m, memory: 32Mi}
+        limits: {cpu: 100m, memory: 64Mi}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: doctor-test-crashloop
+  namespace: doctor-test-faults
+  labels: {app: milvus, io.milvus.doctor.lab: 'true'}
+spec:
+  automountServiceAccountToken: false
+  containers:
+    - name: milvus
+      image: milvusdb/milvus:v2.6.15
+      imagePullPolicy: Never
+      command: [/bin/sh, -c, 'echo "intentional doctor-test crash" >&2; exit 1']
+      resources:
+        requests: {cpu: 10m, memory: 32Mi}
+        limits: {cpu: 100m, memory: 64Mi}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: doctor-test-imagepull
+  namespace: doctor-test-faults
+  labels: {app: milvus, io.milvus.doctor.lab: 'true'}
+spec:
+  automountServiceAccountToken: false
+  containers:
+    - name: milvus
+      image: docker.io/milvusdb/milvus:doctor-test-does-not-exist
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests: {cpu: 10m, memory: 32Mi}
+        limits: {cpu: 100m, memory: 64Mi}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: doctor-test-unbound-pvc
+  namespace: doctor-test-faults
+  labels: {app: milvus, io.milvus.doctor.lab: 'true'}
+spec:
+  storageClassName: doctor-test-no-such-storage-class
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Mi

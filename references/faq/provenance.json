@@ -1,0 +1,21 @@
+{
+  "repository": "milvus-io/milvus-docs",
+  "captured_on": "2026-09-14",
+  "licenses": [
+    {
+      "docs_version": "v3.0.x",
+      "source_commit": "33bec3cead7165ab11c311d20361e90e71045c42",
+      "spdx": "Apache-2.0",
+      "notice_present": false
+    },
+    {
+      "docs_version": "v2.6.x",
+      "source_commit": "b1c232094f7a447c73eeeade5d4fc32cfa03d6b9",
+      "spdx": "Apache-2.0",
+      "notice_present": false
+    }
+  ],
+  "source_files_unmodified": true,
+  "derived_catalog": "Section extraction, retrieval keywords, risk flags and read-only guidance added by Milvus Doctor. No upstream commands executed.",
+  "scope": "Five English FAQ/sidebar pages for each listed version; not every historical version/language or all linked manuals/images."
+}
