@@ -583,3 +583,15 @@ published manifest. Checksums detect changed bytes but are not a digital signatu
 download all three files from the intended release. Follow the
 [update guide](AI-INSTALL.md#existing-installations-and-updates) before replacing
 any existing installation.
+
+## License
+
+Milvus Doctor's project-authored code and Skill documentation in this source
+tree are licensed under the [Apache License 2.0](LICENSE).
+Bundled third-party FAQ material retains its original license and
+[attribution](references/faq/ATTRIBUTION.md).
+
+The project LICENSE was added on `main` after `v0.0.1`. That existing tag and its
+download assets remain unchanged and do not contain this file. This section
+describes the current source tree; use a license-bearing commit or a later
+release for a distribution that includes the project LICENSE.

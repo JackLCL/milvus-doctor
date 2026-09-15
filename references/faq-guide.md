@@ -105,8 +105,9 @@ Lookup checks source hashes, section boundaries, fragments and allowed source
 URLs. Each result has an immutable GitHub source link and a versioned website
 link. Website availability can differ by network; the pinned source is the
 auditable snapshot, not a claim that the website was freshly checked at lookup.
-Upstream Apache-2.0 license files apply to the copied documentation only, not to
-Doctor's own code.
+Upstream Apache-2.0 license files and attribution remain attached to the copied
+documentation. Doctor's own code and project-authored Skill documentation are
+separately covered by the repository-root [Apache-2.0 LICENSE](../LICENSE).
 
 The bundle does not automatically refresh or browse. A later Milvus patch or
 website update can make an answer stale; treat explicit version checks and

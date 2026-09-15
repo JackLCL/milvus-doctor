@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- License project-authored code and Skill documentation under Apache-2.0,
+  preserving the bundled FAQ's separate attribution and license files.
+
 ## 0.0.1 - 2026-09-15
 
 - Diagnose Milvus deployments through bounded, read-only endpoint, metadata and

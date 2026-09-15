@@ -88,6 +88,19 @@ class ReleasePackageTests(unittest.TestCase):
         self.assertEqual(manifest['license_files'], [])
         self.assertIn('No LICENSE', result['warnings'][0])
 
+    def test_committed_project_license_bytes_and_manifest_are_preserved(self):
+        license_bytes = (SCRIPT.parents[1] / 'LICENSE').read_bytes()
+        self.write('LICENSE', license_bytes.decode('utf-8'))
+        self.commit()
+        result = self.build()
+        manifest = json.loads(Path(result['manifest']).read_text())
+        self.assertEqual(result['warnings'], [])
+        self.assertEqual(manifest['license_files'], ['LICENSE'])
+        license_entry = next(item for item in manifest['files'] if item['path'] == 'LICENSE')
+        self.assertEqual(license_entry['sha256'], hashlib.sha256(license_bytes).hexdigest())
+        with zipfile.ZipFile(result['archive']) as archive:
+            self.assertEqual(archive.read('milvus-doctor/LICENSE'), license_bytes)
+
     def test_checksums_and_source_file_manifest_match_actual_bytes(self):
         result = self.build()
         output = Path(result['output_dir'])

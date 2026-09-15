@@ -2,7 +2,8 @@
 
 This is a maintainer workflow, not part of Doctor's diagnostic execution. Building
 does not create a tag, publish a GitHub release, install a Skill, or contact Milvus.
-Publishing and choosing a license require separate maintainer decisions.
+Publishing requires an explicit maintainer decision. Preserve the project's
+Apache-2.0 license and all applicable third-party notices when preparing assets.
 
 ## Release cadence
 
@@ -72,13 +73,19 @@ documentation linked from the README uses versioned source-hosted URLs, not
 nonexistent local ZIP paths. GitHub's automatically generated source archives
 are separate artifacts and may include developer tests/docs.
 
-Only an existing tracked `LICENSE`, `LICENSE.md` or `LICENSE.txt` is included.
-When absent, the builder and manifest explicitly warn that **no open-source
-license or reuse permission is asserted**. Do not invent a license or assume the
-upstream Milvus license automatically applies to this repository.
+Project-authored code and Skill documentation use the repository-root
+[Apache-2.0 LICENSE](../LICENSE). The builder includes the tracked root license
+from the selected commit. Verify that `license_files` lists `LICENSE` and the
+archive contains the exact committed bytes.
 
-Separately attributed FAQ documentation under `references/faq/` carries its own
-included upstream Apache-2.0 license files. Those do not license Doctor's code.
+For an older ref without a root license, the builder still reports its missing
+license warning. It does not copy a newer working-tree LICENSE into that ref or
+rewrite previously published assets. The `v0.0.1` tag and original downloads
+predate this license-file addition and remain unchanged.
+
+FAQ documentation under `references/faq/` retains its separately included
+upstream Apache-2.0 license files and attribution. Keep those notices even
+though the project has independently selected the same license.
 
 Archive order, file modes and timestamps are fixed from the commit, without a
 build-time timestamp; the same commit and builder/compression environment produce

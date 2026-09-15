@@ -123,6 +123,8 @@ class FaqImporterIntegrationTests(unittest.TestCase):
         self.assertEqual(len(catalog["fragments"]), 2)
         self.assertEqual(catalog["captured_on"], "2026-09-14")
         bundle = self.root / "bundle"
+        self.assertEqual((bundle / "ATTRIBUTION.md").read_bytes(),
+                         (ROOT / "references/faq/ATTRIBUTION.md").read_bytes())
         for version in importer.VERSIONS:
             self.assertEqual({s["category"] for s in catalog["sources"] if s["docs_version"] == version},
                              set(faq.CATEGORIES))
