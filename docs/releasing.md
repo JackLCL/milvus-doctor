@@ -8,11 +8,10 @@ Publishing and choosing a license require separate maintainer decisions.
 
 Merge routine improvements into `main` and record user-facing changes under
 `Unreleased` in `CHANGELOG.md`. Individual edits do not require a version bump,
-tag or GitHub Release. Until the first milestone release, installation explicitly
-uses the development branch `main`; the Agent guide resolves and records its full
-commit. `0.0.1-dev` is a development marker, not a published version. Once a stable
-release exists, normal installation instructions stay pinned to it; `main` remains
-available for explicitly requested development use.
+tag or GitHub Release. Normal installation instructions stay pinned to the
+current release, `v0.0.1`; `main` remains available for explicitly requested
+development use. The Agent guide resolves and records the selected full source
+commit, dereferencing annotated tags rather than using their tag-object IDs.
 
 Publish when a milestone is complete. Choose its version, reconcile the runtime
 `__version__`, README and AI-INSTALL installation pins, version-specific examples

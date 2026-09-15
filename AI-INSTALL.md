@@ -5,15 +5,15 @@ Milvus Doctor Skill** for a user. Installation ends with local verification, not
 with an implicit connection to a Milvus cluster. No Doctor server, account,
 separate model API key, or support-form submission is required.
 
-Canonical source: https://github.com/JackLCL/milvus-doctor, development branch `main`.
-No versioned release is currently published. The runtime marker `0.0.1-dev` is
-not a release or a unique commit identity; `main` changes as updates are merged.
+Canonical source: https://github.com/JackLCL/milvus-doctor, release `v0.0.1`.
+Install this release by default. Resolve and retain its full source commit;
+never silently substitute the development branch `main` or another release.
 Read this complete guide before installing. It is Markdown instructions, **not**
 a shell script; never pipe it to `bash` or `sh`. If fetching through a reader
 truncates it, retrieve the complete raw Markdown instead:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/JackLCL/milvus-doctor/main/AI-INSTALL.md
+curl -fsSL https://raw.githubusercontent.com/JackLCL/milvus-doctor/v0.0.1/AI-INSTALL.md
 ```
 
 ## 1. Establish the local installation target
@@ -46,29 +46,38 @@ explain the requirement and stop before claiming the checker is ready.
 
 ### Select one source revision
 
-Resolve `main` to its full commit once, before installing:
+Resolve `v0.0.1` to its full source commit once, before installing. Request both
+the tag and its dereferenced form so annotated and lightweight tags work:
 
 ```bash
-git ls-remote --exit-code https://github.com/JackLCL/milvus-doctor.git refs/heads/main
+git ls-remote --exit-code https://github.com/JackLCL/milvus-doctor.git refs/tags/v0.0.1 'refs/tags/v0.0.1^{}'
 ```
 
-Require one successful result with a full 40-character hexadecimal commit and
-`refs/heads/main`. Set `doctor_commit` to that exact commit for the commands
-below, and retain it in the installation handoff. If resolution fails, stop;
-do not guess a commit or silently use another source. Fetch and read this guide
-at the selected commit so the instructions and installed source agree:
+Require a successful result containing exactly one `refs/tags/v0.0.1` row and
+at most one `refs/tags/v0.0.1^{}` row, each with a full 40-character hexadecimal
+object ID. For an annotated tag, select the **dereferenced `^{}` row** as
+`doctor_commit`; the plain tag row is a tag-object ID, not the source commit.
+For a lightweight tag, only the plain row appears: use that commit ID. Reject
+missing, malformed, duplicate or unexpected results. Retain the selected full
+commit in the installation handoff. If resolution fails, stop; do not guess a
+commit or silently use another source. Fetch and read this guide at that commit
+so the instructions and installed source agree:
 
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/JackLCL/milvus-doctor/$doctor_commit/AI-INSTALL.md"
 ```
 
-If Git is unavailable, a host-supported repository lookup may resolve `main`
-to its full commit for an archive installer instead. Preserve the same source
-identity checks; do not install Git or guess a revision merely to continue.
+If Git is unavailable, a host-supported repository lookup may resolve `v0.0.1`
+to its full source commit for an archive installer instead. It must dereference
+an annotated tag and confirm the selected object is a commit, not report the
+tag-object ID as the commit. Preserve the same source identity checks; do not
+install Git or guess a revision merely to continue.
 
-If the user explicitly requests another revision, verify its full commit and
-use that revision's guide and files throughout. Future milestone releases will
-pin the installation guide and commands to the same published tag/commit.
+If the user explicitly requests another release or development revision such as
+`main`, verify its full commit and use that revision's guide and files throughout.
+Resolve a requested branch with its exact `refs/heads/` ref; apply the same tag
+dereferencing rule to another requested tag. A missing release is not permission
+to fall back to `main`.
 
 ### With the Skills CLI
 
@@ -109,7 +118,7 @@ creating only the necessary parent directories. For example, a fresh personal
 Claude Code installation with the default configuration location:
 
 ```bash
-git clone --no-checkout --single-branch --branch main https://github.com/JackLCL/milvus-doctor.git ~/.claude/skills/milvus-doctor
+git clone --no-checkout --single-branch --branch v0.0.1 https://github.com/JackLCL/milvus-doctor.git ~/.claude/skills/milvus-doctor
 git -C ~/.claude/skills/milvus-doctor checkout --detach "$doctor_commit"
 git -C ~/.claude/skills/milvus-doctor rev-parse HEAD
 ```
@@ -122,8 +131,8 @@ missing prerequisite; don't install system packages without separate authorizati
 
 Verify that checkout succeeded and `HEAD` equals the selected full commit before
 running the downloaded code. If that commit is unavailable, stop and explain;
-do not use a different `main` revision implicitly. For an explicitly selected
-non-main revision, use the host's commit/archive installer or an exact verified
+do not use a different release or `main` revision implicitly. For an explicitly
+selected alternative revision, use the host's commit/archive installer or an exact verified
 checkout. Do not use `repo@version`: that installer's `@` suffix selects a Skill
 name, not a Git revision. Version and local preflight must also be verified.
 
@@ -171,6 +180,11 @@ exists; otherwise use the available Python 3 interpreter:
 python3 scripts/doctor.py --version
 python3 scripts/doctor.py preflight --format json
 ```
+
+For the default release installation, `--version` must report `milvus-doctor 0.0.1`.
+If it differs, stop and check the installed path and source revision rather than
+claiming the requested release is ready. For an explicitly requested alternative
+revision, verify against that revision's declared version instead.
 
 Preflight inspects local Python/platform, discovers optional `yaml`/`pymilvus`
 modules and `docker`/`kubectl` commands, and runs the rule/report/summary pipeline
@@ -239,7 +253,7 @@ Development updates can share the same runtime marker, so compare actual source
 commits, not just `--version`. Resolve and record the intended revision using the
 source-selection procedure above. Preserve an existing installation even if its
 original source revision is no longer available; an unreachable revision is not
-permission to erase local files or replace it. If a future published ZIP is used,
+permission to erase local files or replace it. If a published ZIP is used,
 compare its `RELEASE.json.git_commit` with that release's manifest as well.
 
 Skills CLI reinstall/update can **replace the whole canonical directory**, losing

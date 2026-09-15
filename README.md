@@ -1,6 +1,6 @@
 # Milvus Doctor
 
-[![Development: main](https://img.shields.io/badge/development-main-blue)](https://github.com/JackLCL/milvus-doctor/tree/main)
+[![Version: 0.0.1](https://img.shields.io/badge/version-0.0.1-blue)](https://github.com/JackLCL/milvus-doctor/releases/tag/v0.0.1)
 
 Milvus Doctor helps your AI agent investigate Milvus issues using **read-only**
 checks. It explains what it finds and suggests next steps without changing your
@@ -21,7 +21,7 @@ an account or providing a separate model API key for Doctor.
 **Copy this single message into Claude Code or Codex:**
 
 ```text
-Install Milvus Doctor from main by following https://raw.githubusercontent.com/JackLCL/milvus-doctor/main/AI-INSTALL.md. Record the selected commit and verify the local installation, then help me diagnose my Milvus issue using read-only checks.
+Install Milvus Doctor v0.0.1 by following https://raw.githubusercontent.com/JackLCL/milvus-doctor/v0.0.1/AI-INSTALL.md. Record the selected commit and verify the local installation, then help me diagnose my Milvus issue using read-only checks.
 ```
 
 Your agent checks the environment, installs the complete Skill, and verifies
@@ -39,8 +39,8 @@ or [uninstall](#uninstall).
 Windows are not yet validated. You can use an existing Linux/WSL environment;
 the installer does not set one up for you.
 
-**Development build: 0.0.1-dev.** No versioned release is currently published.
-Installation uses the evolving `main` branch. See [Unreleased changes](CHANGELOG.md).
+**Current release: [0.0.1](https://github.com/JackLCL/milvus-doctor/releases/tag/v0.0.1).**
+Installation is pinned to this release. See the [release notes](CHANGELOG.md).
 Updates are manual: back up local reports and customizations outside the Skill
 directory, follow the [update guide](AI-INSTALL.md#existing-installations-and-updates),
 and [verify the installed version](#version-and-downloads).
@@ -51,14 +51,13 @@ For a **first installation**, run this in a Bash-compatible terminal and select
 Claude Code or Codex:
 
 ```bash
-DISABLE_TELEMETRY=1 npx skills@1.5.26 add https://github.com/JackLCL/milvus-doctor/tree/main -g
+DISABLE_TELEMETRY=1 npx skills@1.5.26 add https://github.com/JackLCL/milvus-doctor/tree/v0.0.1 -g
 ```
 
 This installs the complete Skill for your user, across projects. You need Git,
 network access and Node.js 22.20.0+ for this installer. Python is installed
-separately. The command does not grant cluster access. This installs the current
-development branch, not an immutable release; use the Agent guide to select and
-record a full commit for a reproducible installation.
+separately. The command does not grant cluster access. This installs release
+`v0.0.1`; the Agent guide also resolves and records its full source commit.
 
 `DISABLE_TELEMETRY=1` disables the third-party installer's telemetry and remote
 audit requests. Doctor itself has no telemetry. See the
@@ -168,7 +167,7 @@ is not the full summary; expand the example below to see what goes into the form
 Milvus Doctor Support Summary
 Submission status: NOT SUBMITTED
 
-Doctor version: 0.0.1-dev
+Doctor version: 0.0.1
 Milvus version: 2.6.17 (user-confirmed; not independently verified)
 Deployment method: docker (user-confirmed; not independently verified)
 Deployment topology: standalone (user-confirmed; not independently verified)
@@ -248,7 +247,7 @@ This option does not need Node.js. Clone the repository into a **new** location
 you control. Install the entire directory, not just the `SKILL.md` file:
 
 ```bash
-git clone --depth 1 --branch main https://github.com/JackLCL/milvus-doctor.git
+git clone --depth 1 --branch v0.0.1 https://github.com/JackLCL/milvus-doctor.git
 git -C milvus-doctor rev-parse HEAD
 ```
 
@@ -562,10 +561,10 @@ Check your installed version:
 python3 scripts/doctor.py --version
 ```
 
-The current runtime marker is `0.0.1-dev`; it identifies development builds,
-not a published release or a unique source revision. There are no versioned
-downloads yet. Routine improvements land on `main`; a versioned release is
-published after a milestone is complete.
+The current release is **[0.0.1](https://github.com/JackLCL/milvus-doctor/releases/tag/v0.0.1)**.
+Routine improvements land on `main`; a new versioned release is published after
+a milestone is complete. Normal installations stay pinned to a release. Ask for
+`main` explicitly if you want development changes, and retain its selected commit.
 
 For a Git installation, run `git rev-parse HEAD` from the installed repository
 and keep the full commit with your diagnostic notes. For an installer-managed
@@ -573,7 +572,14 @@ copy without Git metadata, retain the full commit selected during installation;
 do not infer it from today's `main` or from the runtime marker. See the
 [Agent installation guide](AI-INSTALL.md) for commit-pinned installation.
 
-Future releases will provide a runtime ZIP, manifest and checksums. For those
-archives, compare `RELEASE.json.git_commit` with the published manifest. Follow
-the [update guide](AI-INSTALL.md#existing-installations-and-updates) before
-replacing any existing installation.
+For a download without Git, use the release's
+[complete Skill ZIP](https://github.com/JackLCL/milvus-doctor/releases/download/v0.0.1/milvus-doctor-0.0.1.zip),
+[manifest](https://github.com/JackLCL/milvus-doctor/releases/download/v0.0.1/release-manifest.json)
+and [checksums](https://github.com/JackLCL/milvus-doctor/releases/download/v0.0.1/SHA256SUMS).
+Verify the downloaded files with `sha256sum -c SHA256SUMS`, extract into a new
+directory, and follow the [manual installation](#manual-installation-and-local-dependencies)
+registration and preflight steps. Compare `RELEASE.json.git_commit` with the
+published manifest. Checksums detect changed bytes but are not a digital signature;
+download all three files from the intended release. Follow the
+[update guide](AI-INSTALL.md#existing-installations-and-updates) before replacing
+any existing installation.

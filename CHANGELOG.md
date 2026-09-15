@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.0.1 - 2026-09-15
+
 - Diagnose Milvus deployments through bounded, read-only endpoint, metadata and
   local-evidence checks for Docker/Compose, Kubernetes/Helm/Operator and native
   deployments. Report evidence, coverage gaps and recommendations without repairs.
@@ -19,4 +21,4 @@
   example. Explain privacy limits, unknown recheck status and shared-installation
   handling.
 - Develop on `main` and publish versioned releases after completed milestones.
-  The current `0.0.1-dev` runtime marker is not a published release.
+  Normal installation is pinned to `v0.0.1` and records its full source commit.
